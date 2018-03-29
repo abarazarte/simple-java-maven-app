@@ -1,10 +1,18 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('Prepare') {
       steps {
-        sh 'mvn -B -DskipTests clean package'
+        sh 'mvnHome = tool \'maven-3.5.3\''
       }
     }
+    stage('Build') {
+      steps {
+        sh '\'${mvnHome}/bin/mvn\' -B -DskipTests clean package'
+      }
+    }
+  }
+  environment {
+    mvnHome = ''
   }
 }
